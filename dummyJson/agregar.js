@@ -30,6 +30,7 @@ function agregarProducto() {
   })
     .then(res => res.json())
     .then(data => {
+        alert("✅ Producto agregado con éxito");
       mensaje.style.display = "block";
       mensaje.innerHTML = `
         <strong>Producto agregado (simulación)</strong><br>
