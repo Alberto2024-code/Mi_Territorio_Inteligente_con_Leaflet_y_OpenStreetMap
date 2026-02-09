@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domiyson-Editar</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="agregar.css">
+</head>
+<body>
+    <header> 
+    
+    <div class="container">
+        <div class="header-content">
+            <div class="logo"> Dummy JSON - Editar</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"> Inicio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+ </header>
+    <main>
+      <h1> Editar Producto </h1>
+      <div class="form-goup">
+        <label> Nombre del producto</label>
+        <input type="text" id="titulo" placeholder="ingresa el nombre del producto">
+      </div>
+      <div class="form-goup">
+        <label >Precio</label>
+        <input type="number" id="precio" placeholder="0.00">        
+      </div>
+      <div class="form-goup">
+        <label> Ctegoria</label>
+        <select  id="categoria">
+            <option value="smartphones">smartphones</option>
+            <option value="laptos">laptos</option>
+            <option value="fragances">Fragancias</option>
+            <option value="skincare"> cuidado de piel</option>
+            <option value="groceries">Comestibles</option>
+            
+        </select>
+      </div>
+      <div class="form-goup">
+        <label> Descripcion</label>
+      <textarea  id="descripcion" rows="4" placeholder="detalles del producto"></textarea>
+    </div>
+    <div class="form-goup">
+        <label>url imagen </label>
+        <input type="text" id="imagen" placeholder="">
+    </div>
+    <button class="btn-back" onclick="window.history.back()">volver</button>
+   <button onclick="editarProducto()">guardar cambios</button>
+
+   <div id="mensaje-exito"></div>
+   <script src="editar.js"></script>
+</main>
+<footer id="contacto">
+    <div class="container">
+        <p>&copy; 2026 practicas awos. curso de aplicaciones oreintada a servicios</p>
+    </div>
+</footer>
+</body>
+</html>

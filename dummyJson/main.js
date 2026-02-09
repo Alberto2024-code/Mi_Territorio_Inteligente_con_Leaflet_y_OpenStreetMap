@@ -1,61 +1,127 @@
+
 const catalogo = document.getElementById("catalogo");
 const buscar = document.getElementById("buscador");
-const detalle = document.getElementById("detalle");
 
-// Traer productos desde la api
-fetch("https://dummyjson.com/products?limit=9")
-.then(response => response.json())
-.then(data => {
-  
-  data.products.forEach(producto => {
-    // Crear tarjeta 
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.innerHTML = `
-      <h3 class="titulo">${producto.title}</h3>
-      <img src="${producto.thumbnail}" alt="${producto.title}" width="150">
-      <p class="Precio">Precio: $${producto.price}</p>
-      <p class="Categoria">Categoría: ${producto.category}</p>
-      <p class="Raiting">Rating: ${producto.rating}</p>
-      <p class="Stock">Stock: ${producto.stock}</p>
-    `;
+const btnPrev = document.getElementById("prev");
+const btnNext = document.getElementById("next");
+const pagina = document.getElementById("pagina");
 
-    catalogo.appendChild(card);
+let skip = 0;
+const limit = 10;
+let total = 0;
 
-    // Evento click para mostrar detalles en una tabla
-    card.addEventListener("click", () => {
-      detalle.innerHTML = `
-        <h2>Detalle del Producto</h2>
-        <table border="1" cellpadding="5">
-          <tr><th>Título</th><td>${producto.title}</td></tr>
-           <tr><th>Imagen</th><td><img src="${producto.thumbnail}" alt="${producto.title}" width="150"></td></tr>
-           <tr><th>Descripción</th><td>${producto.description}</td></tr>
-          <tr><th>Precio</th><td>$${producto.price}</td></tr>
-          <tr><th>Marca</th><td>${producto.brand}</td></tr>
-          <tr><th>Opiniones</th><td>${producto.comment}</td></tr>
-          <tr><th>Categoría</th><td>${producto.category}</td></tr>
-          <tr><th>Rating</th><td>${producto.rating}</td></tr>
-          <tr><th>Stock</th><td>${producto.stock}</td></tr>
-          
-         
-        </table>
-      `;
-      detalle.scrollIntoView({ behavior: "smooth" }); // baja la pantalla al detalle
+
+// CARGAR PRODUCTOS (GET + PAGINACIÓN)
+
+function cargarProductos() {
+  fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`)
+    .then(res => res.json())
+    .then(data => {
+      total = data.total;
+      renderizarTabla(data.products);
+      actualizarPaginacion();
     });
-  });
+}
+
+
+// RENDERIZAR TABLA
+
+function renderizarTabla(productos) {
+  catalogo.innerHTML = `
+    <table border="1" cellpadding="6" width="100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Imagen</th>
+          <th>Título</th>
+          <th>Precio</th>
+          <th>Categoría</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${productos.map(p => `
+          <tr>
+            <td>${p.id}</td>
+            <td><img src="${p.thumbnail}" width="60"></td>
+            <td>${p.title}</td>
+            <td>$${p.price}</td>
+            <td>${p.category}</td>
+            <td>
+              <a href="editar.html?id=${p.id}">Editar</a>
+              <button onclick="eliminarProducto(${p.id})">Eliminar</button>
+            </td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  `;
+}
+
+
+// PAGINACIÓN
+
+function actualizarPaginacion() {
+  const actual = skip / limit + 1;
+  const totalPaginas = Math.ceil(total / limit);
+  pagina.textContent = `Página ${actual} de ${totalPaginas}`;
+}
+
+btnNext.addEventListener("click", () => {
+  if (skip + limit < total) {
+    skip += limit;
+    cargarProductos();
+  }
 });
 
-// Buscador 
-buscar.addEventListener("keyup", () => {
-  const texto = buscar.value.toLowerCase();
-  const tarjetas = document.querySelectorAll(".card");
-
-  tarjetas.forEach(card => {
-    const titulo = card.querySelector(".titulo").textContent.toLowerCase();
-    const categoria = card.querySelector(".Categoria").textContent.toLowerCase();
-    card.style.display = titulo.includes(texto) || categoria.includes(texto) ? "block" : "none";
-  });
+btnPrev.addEventListener("click", () => {
+  if (skip > 0) {
+    skip -= limit;
+    cargarProductos();
+  }
 });
+
+
+// BUSCADOR (API SEARCH)
+
+buscar.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    const texto = buscar.value.trim();
+    if (!texto) {
+      skip = 0;
+      cargarProductos();
+      return;
+    }
+
+    fetch(`https://dummyjson.com/products/search?q=${texto}`)
+      .then(res => res.json())
+      .then(data => {
+        renderizarTabla(data.products);
+        pagina.textContent = `Resultados de búsqueda`;
+      });
+  }
+});
+
+
+// ELIMINAR PRODUCTO (DELETE)
+
+function eliminarProducto(id) {
+  if (!confirm("¿Seguro que deseas eliminar este producto?")) return;
+
+  fetch(`https://dummyjson.com/products/${id}`, {
+    method: "DELETE"
+  })
+  .then(res => res.json())
+  .then(() => {
+    alert("Producto eliminado correctamente (simulado)");
+    cargarProductos();
+  });
+}
+
+// ===============================
+// CARGA INICIAL
+// ===============================
+cargarProductos();
 
 
 

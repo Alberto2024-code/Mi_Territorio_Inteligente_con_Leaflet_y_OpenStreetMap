@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard de Productos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
 
-    <h1 class="brand-name">CATÁLOGO DE PRODUCTOS</h1>
-    <br>
-    <!-- Catálogo -->
-  
-<input type="text" id="buscador" placeholder="ingresa el producto a buscar ">
+  <!-- Barra superior -->
+  <header class="top-bar">
+    <h1 class="brand-name">Dashboard de Productos</h1>
+    <input 
+      type="text" 
+      id="buscador" 
+      placeholder="Buscar producto y presiona Enter">
+    <a href="agregar.html" class="btn">Nuevo Producto</a>
+  </header>
+
+  <!-- Área principal -->
+  <main>
     <section id="catalogo" class="catalogo"></section>
-     <section id ="detalle" class="detalle"></section>
-    <script src="main.js"></script>
+  </main>
+
+  <!-- Paginación -->
+  <footer class="paginacion">
+    <button id="prev">Anterior</button>
+    <span id="pagina">Página 1</span>
+    <button id="next">Siguiente</button>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>
-
-

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>agregar un producto</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="agregar.css">
+</head>
+<body>
+    <h1> Alta de nuevos productos</h1>
+    <div class="form-goup">
+        <label>Nombre del producto</label>
+        <input type="text" id="titulo" placeholder="Ingresa el nombre del producto">
+    </div>
+    <div class="form-goup">
+        <label > Precio($)</label>
+        <input type="number" id="precio" placeholder="0.00">
+
+    </div>
+    <div class="form-goup">
+        <label> Categorias</label>
+        <select  id="categoria">
+            <option value="smartphones"> smartphones</option>
+            <option value="laptos">Laptos</option>
+            <option value="fragances"> fragancias</option>
+            <option value="skincare"> Skin Care</option>
+            <option value="groceries"> Groseries</option>
+        </select>
+    </div>
+    <div class="form-goup">
+        <label >Descripcion</label>
+        <textarea  id="descripcion" rows="4" placeholder="descripcion del producto"></textarea>
+    </div>
+    <button class="btn-back" onclick="window.location.href='index.html'">-come back</button>
+    <div id="mensaje-exito"></div>
+    <script src="agregar.js"></script>
+</body>
+</html>
