@@ -118,9 +118,7 @@ function eliminarProducto(id) {
   });
 }
 
-// ===============================
-// CARGA INICIAL
-// ===============================
+
 cargarProductos();
 
 
